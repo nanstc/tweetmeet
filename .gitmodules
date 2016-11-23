@@ -1,0 +1,3 @@
+[submodule "twitter-conduit"]
+	path = twitter-conduit
+	url = git@github.com:himura/twitter-conduit.git
