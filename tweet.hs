@@ -57,9 +57,11 @@ main :: IO ()
 main = do
   -- Read the timeline from Hackage user. Feel free to change the screen
   -- name to any other.
-  ets <- timeline "realDonaldTrump"
+  putStrLn "Enter a user you would like to search"
+  n <- getLine
+  ets <- timeline n
   case ets of
    -- When the parsing of the JSON data fails, we report it.
    Left err -> putStrLn err
    -- When successful, print in the screen the first 5 tweets.
-   Right ts  -> mapM_ print $ take 15 ts
+   Right ts  -> mapM_ print $ take 5 ts
