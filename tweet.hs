@@ -59,17 +59,30 @@ timeline name = do
   -- Decode the response body.
   return $ eitherDecode $ responseBody res
 
--- | The main function, as an example of how to use the 'timeline'
---   function.
+handle_handling :: IO ()
+handle_handling = do 
+    putStrLn "Enter a handle you would like to search, without the '@'"
+    -- Read the timeline of an inputted handle. 
+    n <- getLine
+    ets <- timeline n
+    case ets of
+        -- When the parsing of the JSON data fails, we report it.
+        Left err -> putStrLn err
+   -- When successful, print in the screen the first 5 tweets. mapM_ print $ take 1 ts
+        Right ts  -> mapM_ format $ take 5 ts
+
+hashtag_handling :: IO ()
+hashtag_handling = do 
+    putStrLn "This function is not yet implemented!"
+
+greeting :: IO ()
+greeting = do 
+  putStrLn "Welcome to Tweetmeet! This mini-app provides you live tweets of your faviourite subject topics."
+  putStrLn "Would you like to search based on @userhandle, or #hashtag? (enter @ or #)"
+  
+-- -- | The main function to kick-start the app
 main :: IO ()
 main = do
-  -- Read the timeline from Hackage user. Feel free to change the screen
-  -- name to any other.
-  putStrLn "Enter a user you would like to search"
-  n <- getLine
-  ets <- timeline n
-  case ets of
-   -- When the parsing of the JSON data fails, we report it.
-   Left err -> putStrLn err
-   -- When successful, print in the screen the first 5 tweets. mapM_ print $ take 1 ts
-   Right ts  -> mapM_ format $ take 5 ts
+  greeting
+  symbol <- getLine
+  if (symbol == "@") then handle_handling else hashtag_handling
