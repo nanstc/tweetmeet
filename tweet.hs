@@ -33,6 +33,14 @@ data Tweet =
 instance FromJSON Tweet
 instance ToJSON Tweet
 
+format :: Tweet -> IO()
+format tweet = do 
+   putStrLn $ "Tweet: " ++ (show $ text tweet)
+   putStrLn $ "Favourite count: " ++ (show $ favorite_count tweet)
+   putStrLn $ "Retweet count: " ++ (show $ retweet_count tweet)
+   putStrLn $ ""
+
+
 -- | This function reads a timeline JSON and parse it using the 'Tweet' type.
 timeline :: String -- ^ Screen name of the user
          -> IO (Either String [Tweet]) -- ^ If there is any error parsing the JSON data, it
@@ -63,5 +71,5 @@ main = do
   case ets of
    -- When the parsing of the JSON data fails, we report it.
    Left err -> putStrLn err
-   -- When successful, print in the screen the first 5 tweets.
-   Right ts  -> mapM_ print $ take 5 ts
+   -- When successful, print in the screen the first 5 tweets. mapM_ print $ take 1 ts
+   Right ts  -> mapM_ format $ take 5 ts
