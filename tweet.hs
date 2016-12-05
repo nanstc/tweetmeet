@@ -1,3 +1,7 @@
+-- Project: tweetmeet
+-- Aditi Chakravarthi a3b0b 
+-- Nancy Chen l6y9a 
+
 {-# LANGUAGE OverloadedStrings, DeriveGeneric #-}
 
 import Data.ByteString (ByteString)
@@ -106,7 +110,7 @@ searchResult name counts = do
   -- Parse array of twitter in the "statuses" tag in JSON and set as Right variable
   let twts = Right $ fromJust $ parseMaybe tweets  =<< decode (responseBody res) :: Either String [Tweet]
   return twts
-  
+
 
 -- A simple function to get rid of leading '@' in input, if at all 
 parsehandle [] = []
@@ -136,7 +140,7 @@ handle_handling = do
         -- When the parsing of the JSON data fails, we report it.
         Left err -> putStrLn err
         -- When successful, print in the screen the number of tweets user specified
-        Right ts  -> mapM_ format $ take (read n :: Int) ts
+        Right ts  ->  mapM_ format $ reverse $ take (read n :: Int) ts
 
 -- The function that gives back tweets based on hashtags 
 hashtag_handling :: IO ()
@@ -154,12 +158,12 @@ hashtag_handling = do
         -- When the parsing of the JSON data fails, we report it.
         Left err -> putStrLn err
         -- When successful, print in the screen the number of tweets user specified
-        Right ts -> mapM_ format $ take (read n :: Int) ts
+        Right ts ->  mapM_ format $ reverse $ take (read n :: Int) ts
 
 -- Function that greets users when entering system
 greeting :: IO ()
 greeting = do 
-  putStrLn "Welcome to Tweetmeet! This mini-app provides you live tweets of your faviourite subject topics."
+  putStrLn "Welcome to Tweetmeet! This mini-app provides you live tweets of your favourite subject topics."
   putStrLn "Would you like to search based on @userhandle, or #hashtag? (enter @ or #)"
   
 -- -- | The main function to kick-start the app
